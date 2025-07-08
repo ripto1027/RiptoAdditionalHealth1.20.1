@@ -1,22 +1,28 @@
 package stan.ripto.riptoadditionalhealth.util;
 
-import net.minecraft.network.protocol.game.ClientboundSetHealthPacket;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import stan.ripto.riptoadditionalhealth.capability.HealthDataProvider;
+import stan.ripto.riptoadditionalhealth.item.HealthItem;
+
+import java.util.UUID;
 
 public class HealthUtils {
     public static void syncPlayerHealth(Player player) {
         player.getCapability(HealthDataProvider.INSTANCE).ifPresent(data -> {
-            double base = 20.0 + data.getHealth() * 2;
+            double bonus = data.getHealth() * 2;
             AttributeInstance attribute = player.getAttribute(Attributes.MAX_HEALTH);
+            UUID uuid = HealthItem.UUID_ADDITIONAL_HEALTH;
             if (attribute != null) {
-                attribute.setBaseValue(base);
-            }
-            if (player instanceof ServerPlayer p) {
-                p.connection.send(new ClientboundSetHealthPacket(p.getHealth(), p.getFoodData().getFoodLevel(), p.getFoodData().getSaturationLevel()));
+                if (attribute.getModifier(uuid) != null) {
+                    attribute.removeModifier(uuid);
+                }
+                if (bonus > 0) {
+                    AttributeModifier modifier = new AttributeModifier(uuid, "health_bonus", bonus, AttributeModifier.Operation.ADDITION);
+                    attribute.addPermanentModifier(modifier);
+                }
             }
         });
     }
