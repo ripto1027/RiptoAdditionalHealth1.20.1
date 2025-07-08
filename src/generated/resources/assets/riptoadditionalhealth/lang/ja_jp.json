@@ -1,0 +1,5 @@
+{
+  "item.riptoadditionalhealth.additional_heart": "アディショナルハート",
+  "message.command.result.riptoadditionalhealth.fail": "体力のリセットに失敗しました。",
+  "message.command.result.riptoadditionalhealth.success": "体力が正常にリセットされました。"
+}

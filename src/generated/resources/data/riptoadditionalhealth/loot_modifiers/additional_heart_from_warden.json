@@ -1,0 +1,14 @@
+{
+  "type": "riptoadditionalhealth:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/warden"
+    },
+    {
+      "chance": 1.0,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "riptoadditionalhealth:additional_heart"
+}
