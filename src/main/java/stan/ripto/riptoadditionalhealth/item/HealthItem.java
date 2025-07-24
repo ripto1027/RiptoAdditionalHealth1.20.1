@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import stan.ripto.riptoadditionalhealth.capability.HealthDataProvider;
+import stan.ripto.riptoadditionalhealth.capability.RiptoAdditionalHealthCapabilities;
 import stan.ripto.riptoadditionalhealth.util.HealthUtils;
 
 import java.util.UUID;
@@ -24,7 +24,7 @@ public class HealthItem extends Item {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide() && !pPlayer.isCreative()) {
             int count = stack.getCount();
-            pPlayer.getCapability(HealthDataProvider.INSTANCE).ifPresent(data -> {
+            pPlayer.getCapability(RiptoAdditionalHealthCapabilities.INSTANCE).ifPresent(data -> {
                 data.addHealth(count);
                 HealthUtils.syncPlayerHealth(pPlayer);
                 pPlayer.heal((float) count * 2);

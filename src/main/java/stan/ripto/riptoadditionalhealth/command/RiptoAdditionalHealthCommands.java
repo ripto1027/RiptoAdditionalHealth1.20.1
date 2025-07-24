@@ -5,7 +5,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import stan.ripto.riptoadditionalhealth.capability.HealthDataProvider;
+import stan.ripto.riptoadditionalhealth.capability.RiptoAdditionalHealthCapabilities;
 import stan.ripto.riptoadditionalhealth.util.HealthUtils;
 
 public class RiptoAdditionalHealthCommands {
@@ -16,7 +16,7 @@ public class RiptoAdditionalHealthCommands {
         dispatcher.register(Commands.literal("health_reset")
                 .executes(context -> {
                     Player player = context.getSource().getPlayerOrException();
-                    player.getCapability(HealthDataProvider.INSTANCE).ifPresent(data -> {
+                    player.getCapability(RiptoAdditionalHealthCapabilities.INSTANCE).ifPresent(data -> {
                         if (data.getHealth() > 0) {
                             data.setHealth(0);
                             player.setHealth(20.0F);

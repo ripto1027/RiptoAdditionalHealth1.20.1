@@ -8,6 +8,9 @@ import net.minecraftforge.registries.RegistryObject;
 import stan.ripto.riptoadditionalhealth.RiptoAdditionalHealth;
 
 public class RiptoAdditionalHealthLootModifier {
-    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, RiptoAdditionalHealth.MODID);
-    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_ITEM = LOOT_MODIFIER_SERIALIZERS.register("add_item", AddItemModifier.CODEC);
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIER_SERIALIZERS =
+            DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, RiptoAdditionalHealth.MODID);
+
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_ITEM =
+                                            LOOT_MODIFIER_SERIALIZERS.register("add_item", AddItemModifier.CODEC);
 }

@@ -4,7 +4,8 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.common.loot.LootTableIdCondition;
 import stan.ripto.riptoadditionalhealth.RiptoAdditionalHealth;
@@ -27,7 +28,7 @@ public class RiptoAdditionalHealthGlobalLootModifierProvider extends GlobalLootM
         add(EntityType.STRAY);
         add(EntityType.BLAZE);
         add(EntityType.CAVE_SPIDER);
-        add(EntityType.ELDER_GUARDIAN, 1.0F);
+        add(EntityType.ELDER_GUARDIAN, 0.5F);
         add(EntityType.ENDER_DRAGON, 1.0F);
         add(EntityType.ENDERMITE);
         add(EntityType.EVOKER, 0.3F);
@@ -40,7 +41,7 @@ public class RiptoAdditionalHealthGlobalLootModifierProvider extends GlobalLootM
         add(EntityType.MAGMA_CUBE);
         add(EntityType.PHANTOM);
         add(EntityType.PIGLIN);
-        add(EntityType.PIGLIN_BRUTE, 0.2F);
+        add(EntityType.PIGLIN_BRUTE, 0.1F);
         add(EntityType.PILLAGER);
         add(EntityType.RAVAGER, 0.5F);
         add(EntityType.SHULKER);
@@ -58,10 +59,20 @@ public class RiptoAdditionalHealthGlobalLootModifierProvider extends GlobalLootM
 
     private void add(EntityType<?> entity, float rate) {
         String name = EntityType.getKey(entity).getPath();
-        add("additional_heart_from_" + name, new AddItemModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(ResourceLocation.parse("entities/" + name)).build(), LootItemRandomChanceCondition.randomChance(rate).build()}, RiptoAdditionalHealthItems.ADDITIONAL_HEART.get()));
+        add(
+                "additional_heart_from_" + name,
+                new AddItemModifier(
+                        new LootItemCondition[]{
+                                new LootTableIdCondition.Builder(ResourceLocation.parse("entities/" + name)).build(),
+                                LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                                LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(rate, 0.03F).build()
+                        },
+                        RiptoAdditionalHealthItems.ADDITIONAL_HEART.get()
+                )
+        );
     }
 
     private void add(EntityType<?> entity) {
-        add(entity, 0.05F);
+        add(entity, 0.01F);
     }
 }

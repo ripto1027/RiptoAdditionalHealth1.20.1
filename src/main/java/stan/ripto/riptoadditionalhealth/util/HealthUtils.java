@@ -4,14 +4,14 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import stan.ripto.riptoadditionalhealth.capability.HealthDataProvider;
+import stan.ripto.riptoadditionalhealth.capability.RiptoAdditionalHealthCapabilities;
 import stan.ripto.riptoadditionalhealth.item.HealthItem;
 
 import java.util.UUID;
 
 public class HealthUtils {
     public static void syncPlayerHealth(Player player) {
-        player.getCapability(HealthDataProvider.INSTANCE).ifPresent(data -> {
+        player.getCapability(RiptoAdditionalHealthCapabilities.INSTANCE).ifPresent(data -> {
             double bonus = data.getHealth() * 2;
             AttributeInstance attribute = player.getAttribute(Attributes.MAX_HEALTH);
             UUID uuid = HealthItem.UUID_ADDITIONAL_HEALTH;

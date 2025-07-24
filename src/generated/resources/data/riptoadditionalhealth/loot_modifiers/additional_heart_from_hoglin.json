@@ -6,8 +6,12 @@
       "loot_table_id": "minecraft:entities/hoglin"
     },
     {
-      "chance": 0.05,
-      "condition": "minecraft:random_chance"
+      "condition": "minecraft:killed_by_player"
+    },
+    {
+      "chance": 0.01,
+      "condition": "minecraft:random_chance_with_looting",
+      "looting_multiplier": 0.03
     }
   ],
   "item": "riptoadditionalhealth:additional_heart"
