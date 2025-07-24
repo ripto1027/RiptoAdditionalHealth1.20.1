@@ -19,21 +19,6 @@ import stan.ripto.riptoadditionalhealth.util.HealthUtils;
 
 @Mod.EventBusSubscriber(modid = RiptoAdditionalHealth.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class RiptoAdditionalHealthForgeEvents {
-//    @SubscribeEvent
-//    public static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-//        HealthUtils.syncPlayerHealth(event.getEntity());
-//    }
-
-//    @SubscribeEvent
-//    public static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
-//        HealthUtils.syncPlayerHealth(event.getEntity());
-//    }
-//
-//    @SubscribeEvent
-//    public static void onChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-//        HealthUtils.syncPlayerHealth(event.getEntity());
-//    }
-
     @SubscribeEvent
     public static void onAttachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
@@ -43,6 +28,8 @@ public class RiptoAdditionalHealthForgeEvents {
 
     @SubscribeEvent
     public static void onClone(PlayerEvent.Clone event) {
+        if (event.isWasDeath()) return;
+
         CompoundTag originalTag = event.getOriginal().serializeNBT();
 
         if (originalTag.contains("ForgeCaps")) {
